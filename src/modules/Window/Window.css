@@ -1,0 +1,35 @@
+.window {
+    position: fixed;
+    height: 600px;
+    width: 350px;
+    border: 2px solid var(--highlight);
+    background-color: var(--bg-light);
+}
+
+.window .handle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-dark);
+    padding: 2px;
+    user-select: none;
+}
+
+.window h2 {
+    font-size: 1.5rem;
+}
+
+.window button {
+    background-color: transparent;
+    color: var(--danger);
+    border: 0;
+    height: 1rem;
+    font-size: 1.1rem;
+    margin-right: 10px;
+}
+
+.window .content {
+    height: 100%;
+    width: 100%;
+}

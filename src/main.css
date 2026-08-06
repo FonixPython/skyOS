@@ -1,0 +1,32 @@
+:root {
+    --bg: #02061F;
+    --bg-dark: #010310;
+    --bg-light: #060b29;
+    --text: #E1F0FF;
+    --text-muted: hsl(210, 50%, 84%);
+    --highlight: #496297;
+    --highlight-gradient: linear-gradient(to right, #8BDEDA, #43ADD0, #998EE0, #E17DC2, #EF9393);
+    --danger: #FF383C;
+}
+
+* {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.highlighted {
+    background: var(--highlight-gradient);
+    background-clip: text;
+    color: transparent;
+    border: 0px;
+    border-bottom: 1px;
+    border-style: solid;
+    border-image: var(--highlight-gradient) 1;
+}
