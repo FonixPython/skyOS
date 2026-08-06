@@ -1,7 +1,6 @@
 .window {
+    z-index: 1000;
     position: fixed;
-    height: 600px;
-    width: 350px;
     border: 2px solid var(--highlight);
     background-color: var(--bg-light);
 }

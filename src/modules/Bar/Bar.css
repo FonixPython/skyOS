@@ -10,6 +10,7 @@
     border-style: solid;
     border-image: var(--highlight-gradient) 1;
     user-select: none;
+    height: 2.5rem;
 }
 
 .topBar .clock {

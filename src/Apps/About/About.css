@@ -1,0 +1,38 @@
+.aboutApp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aboutApp .logo {
+    font-size: 5rem;
+    user-select: none;
+}
+
+.aboutApp p {
+    margin-top: 20px;
+    width: 80%;
+    text-align: center;
+}
+
+.aboutApp a {
+    margin: 20px;
+    text-decoration: none;
+    color: var(--text);
+    user-select: none;
+}
+
+.aboutApp a div {
+    height: 2rem;
+    width: 15rem;
+    background-color: var(--bg-dark);
+    border: 3px ridge var(--highlight);
+    text-align: center;
+    transition: 0.2s;
+}
+
+.aboutApp a div:hover {
+    scale: 1.1;
+    transition: 0.2s;
+    border-image: var(--highlight-gradient) 1;
+}
