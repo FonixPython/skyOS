@@ -5,13 +5,14 @@ import { Notes } from "./Apps/Notes/Notes"
 import { SettingsApp } from "./Apps/Settings/Settings"
 import { CalculatorApp } from "./Apps/Calculator/Calculator"
 import { useEffect, useState } from "react"
-import crypto from "crypto"
+import {v4 as uuidv4} from 'uuid';
+
 
 export default function Os() {
     const [windows, setWindows] = useState([])
 
     const addWindow = (title) => {
-        setWindows(prev => [...prev, { id: crypto.randomUUID(), title }]);
+        setWindows(prev => [...prev, { id: uuidv4(), title }]);
     };
 
     const handleRemoveWindow = (id) => {
