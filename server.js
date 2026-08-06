@@ -16,9 +16,6 @@ backend.use(express.static(path.join(__dirname, "dist")));
 backend.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "dist/index.html"))
 })
-backend.get("/webos", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist/index.html"))
-})
 function getIPv4Addresses() {
     const interfaces = os.networkInterfaces();
     const addresses = [];
