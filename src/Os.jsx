@@ -5,6 +5,7 @@ import { Notes } from "./Apps/Notes/Notes"
 import { SettingsApp } from "./Apps/Settings/Settings"
 import { CalculatorApp } from "./Apps/Calculator/Calculator"
 import { useEffect, useState } from "react"
+import crypto from "crypto"
 
 export default function Os() {
     const [windows, setWindows] = useState([])

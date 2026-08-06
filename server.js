@@ -2,15 +2,19 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import os from "os";
+import { fileURLToPath } from "url";
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const PORT = Number(process.env.PORT) || 3000;
 const backend = express()
 
-backend.use(express.static("dist"));
+backend.use(express.static(path.join(__dirname, "dist")));
 backend.get("/", (req, res) => {
-    res.sendFile("dist/index.html")
+    res.sendFile(path.join(__dirname, "dist/index.html"))
 })
 function getIPv4Addresses() {
     const interfaces = os.networkInterfaces();
