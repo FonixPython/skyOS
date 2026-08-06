@@ -20,6 +20,12 @@
     text-decoration: none;
     color: var(--text);
     user-select: none;
+    display: flex;
+}
+
+.aboutApp a div p {
+    margin: 0;
+    width: 100%;
 }
 
 .aboutApp a div {
@@ -27,8 +33,9 @@
     width: 15rem;
     background-color: var(--bg-dark);
     border: 3px ridge var(--highlight);
-    text-align: center;
     transition: 0.2s;
+    display: flex;
+    align-items: center;
 }
 
 .aboutApp a div:hover {

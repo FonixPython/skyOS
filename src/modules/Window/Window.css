@@ -2,7 +2,7 @@
     z-index: 1000;
     position: fixed;
     border: 2px solid var(--highlight);
-    background-color: var(--bg-light);
+    background-color: transparent;
 }
 
 .window .handle {
