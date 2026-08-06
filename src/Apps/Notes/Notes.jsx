@@ -2,13 +2,8 @@ import "./Notes.css"
 import { useEffect, useState } from "react"
 
 export function Notes() {
-    interface Note {
-        title: string,
-        text: string
-    }
-
-    const [notes, setNotes] = useState<Note[]>([])
-    const [currentNoteIndex, setCurrentNoteIndex] = useState<null | number>(null)
+    const [notes, setNotes] = useState([])
+    const [currentNoteIndex, setCurrentNoteIndex] = useState(null)
     function loadNotes() {
         if (!localStorage.getItem("notes")) {
             localStorage.setItem("notes", JSON.stringify([]))
@@ -17,7 +12,7 @@ export function Notes() {
         }
     }
     async function addNote() {
-        const newNote: Note = { title: "Untitled Note", text: "" }
+        const newNote = { title: "Untitled Note", text: "" }
         const updatedNotes = [...notes, newNote]
         await setNotes(updatedNotes)
         console.log(notes)
