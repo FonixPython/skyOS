@@ -4,8 +4,9 @@ import { AboutApp } from "./Apps/About/About"
 import { Notes } from "./Apps/Notes/Notes"
 import { SettingsApp } from "./Apps/Settings/Settings"
 import { CalculatorApp } from "./Apps/Calculator/Calculator"
+import { ImageViewer } from "./Apps/ImageViewer/ImageViewer"
 import { useEffect, useState } from "react"
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function Os() {
@@ -29,6 +30,8 @@ export default function Os() {
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 250, y: 320 }}><CalculatorApp /></Window>)
             case "Settings":
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 150 }}><SettingsApp /></Window>)
+            case "Image Viewer":
+                return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 500 }}><ImageViewer /></Window>)
             default:
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 500 }}></Window>)
         }
@@ -59,19 +62,23 @@ export default function Os() {
             <div className="desktop">
                 <button onClick={() => { addWindow("About") }} className="openButton">
                     <img src="/info.webp" alt="info icon" />
-                    <p>Open About</p>
+                    <p>About</p>
                 </button>
                 <button onClick={() => { addWindow("Notes") }} className="openButton">
                     <img src="/notes.webp" alt="notes icon" />
-                    <p>Open Notes</p>
+                    <p>Notes</p>
                 </button>
                 <button onClick={() => { addWindow("Calculator") }} className="openButton">
                     <img src="/calculator.webp" alt="calculator icon" />
-                    <p>Open Calculator</p>
+                    <p>Calculator</p>
+                </button>
+                <button onClick={() => { addWindow("Image Viewer") }} className="openButton">
+                    <img src="/image.webp" alt="image viewer icon" />
+                    <p>Images</p>
                 </button>
                 <button onClick={() => { addWindow("Settings") }} className="openButton">
                     <img src="/settings.webp" alt="settings icon" />
-                    <p>Open Settings</p>
+                    <p>Settings</p>
                 </button>
                 {windows.map((window, index) => returnOpenedApp(index, window))}
             </div>
