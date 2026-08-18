@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import "./ImageViewer.css"
 
 export function ImageViewer(props) {
@@ -6,6 +6,8 @@ export function ImageViewer(props) {
     const [link, setLink] = useState("https://skyfonix.cigoria.eu/api/uploads/aea67551-99bd-11f1-86f2-9c50b9b14b65")
 
     const containerRef = useRef(null)
+
+    const imageRef = useRef(null)
 
     const [scale, setScale] = useState(1)
     const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -57,11 +59,15 @@ export function ImageViewer(props) {
 
     return (
         <div className="app imageViewerApp">
-            {mode == "open" && <div style={{ width: "100%", height: "100%" }}>
-                <input type="text" placeholder="Link here..." value={link} onChange={() => { setLink(e.target.value) }} />
+            {mode == "open" && <div className="open" style={{ width: "100%", height: "100%" }}>
+                <input type="text" placeholder="Link here..." value={link} onChange={(e) => { setLink(e.target.value) }} />
+                <p>or</p>
+                <input type="file" onChange={(e) => { setLink(prev => (e.target.files? URL.createObjectURL(e.target.files[0]) : prev)) }} />
+                <p>or</p>
+                <input type="text" placeholder="simpleShare code" onChange={(e) => { setLink("https://fs.cigoria.eu/files/"+e.target.value) }} />
                 <button onClick={() => { setMode("view") }}>Open</button>
             </div>}
-            {mode == "view" && <div style={{ width: "100%", height: "100%" }}>
+            {mode == "view" && <div style={{ width: "100%", height: "100%" }} className="view">
                 <div className="imageContainer" ref={containerRef} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onWheel={handleWheel}>
                     <img
                         src={link}
@@ -73,10 +79,25 @@ export function ImageViewer(props) {
                                 scale(${scale})
                             `,
                         }}
+                        ref={imageRef}
+                        onLoad={() => {
+                            setScale((props.dimensions.y - 60) / imageRef.current.naturalHeight)
+                            setPosition({ x: 0, y: 0 })
+                            initialPosition.current = { x: 0, y: 0 }
+                            dragStart.current = { x: 0, y: 0 }
+                        }}
                     />
                 </div>
                 <div className="controls">
                     <button onClick={() => { setMode("open") }}>Open new</button>
+                    <button onClick={() => { setScale(prev => (Math.max(prev - 0.1, 0.1))) }}>-</button>
+                    <button onClick={() => { setScale(prev => (Math.min(prev + 0.1, 10))) }}>+</button>
+                    <button onClick={() => {
+                        setScale((props.dimensions.y - 60) / imageRef.current.naturalHeight)
+                        setPosition({ x: 0, y: 0 })
+                        initialPosition.current = { x: 0, y: 0 }
+                        dragStart.current = { x: 0, y: 0 }
+                    }}>Reset</button>
                 </div>
             </div>}
         </div>
