@@ -5,6 +5,7 @@ import { Notes } from "./Apps/Notes/Notes"
 import { SettingsApp } from "./Apps/Settings/Settings"
 import { CalculatorApp } from "./Apps/Calculator/Calculator"
 import { ImageViewer } from "./Apps/ImageViewer/ImageViewer"
+import { MusicPlayer } from "./Apps/MusicPlayer/MusicPlayer"
 import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from 'uuid';
 
@@ -32,6 +33,8 @@ export default function Os() {
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 150 }}><SettingsApp /></Window>)
             case "Image Viewer":
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 600, y: 450 }}><ImageViewer dimensions={{ x: 600, y: 450 }} /></Window>)
+            case "Music Player":
+                return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 450 }}><MusicPlayer /></Window>)
             default:
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 500 }}></Window>)
         }
@@ -75,6 +78,10 @@ export default function Os() {
                 <button onClick={() => { addWindow("Image Viewer") }} className="openButton">
                     <img src="/image.webp" alt="image viewer icon" />
                     <p>Images</p>
+                </button>
+                <button onClick={() => { addWindow("Music Player") }} className="openButton">
+                    <img src="/music.webp" alt="Music player icon" />
+                    <p>Music</p>
                 </button>
                 <button onClick={() => { addWindow("Settings") }} className="openButton">
                     <img src="/settings.webp" alt="settings icon" />

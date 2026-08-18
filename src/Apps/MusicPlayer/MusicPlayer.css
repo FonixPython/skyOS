@@ -1,0 +1,68 @@
+.musicPlayerApp button {
+    padding: 10px 5px;
+    margin: 5px;
+    color: var(--text);
+    background-color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin-top: auto;
+    border: 2px solid var(--highlight);
+}
+
+.musicPlayerApp input {
+    background-color: var(--bg-light);
+    border: 5px ridge var(--highlight);
+    color: var(--text);
+    max-width: 70%;
+    width: 70%;
+    height: 1.5rem;
+    margin: 5px;
+}
+
+.musicPlayerApp .open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.musicPlayerApp .open button {
+    margin-top: 5px;
+}
+
+.musicPlayerApp .play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.musicPlayerApp .play img {
+    object-fit: contain;
+    width: 80%;
+    margin: auto;
+}
+
+.musicPlayerApp .play .controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+
+.musicPlayerApp .play .controls button {
+    width: 40px;
+    height: 40px;
+    padding: 2px;
+}
+
+.musicPlayerApp .play .controls button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0;
+}
