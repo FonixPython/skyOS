@@ -22,17 +22,43 @@ export function SimpleShareBrowser(props) {
         loadFiles()
     }, [])
 
+    const [selectedFile, setSelectedFile] = useState(null)
+
+    async function uploadFile(e) {
+        e.preventDefault()
+        if (selectedFile) {
+            const formData = new FormData()
+            formData.append("file", selectedFile)
+            const result = await fetch("https://fs.cigoria.eu/upload", {
+                method: "POST",
+                headers: {
+                    'authorization': localStorage.getItem("simpleShareToken") || ""
+                },
+                body: formData
+            })
+            if (result.status == 200) {
+                loadFiles()
+                setSelectedFile(null)
+                e.target.reset()
+            }
+        }
+    }
+
     return (
         <div className="app simpleShareBrowserApp">
+            <form onSubmit={uploadFile}>
+                <input type="file" onChange={(e) => { setSelectedFile(e.target.files?.[0] || null) }} />
+                <input type="submit" value="Upload" />
+            </form>
             <div className="files">
                 {files.map((item) => {
                     if (item.type == "file") {
                         return (
-                            <FileComponent item={item} open={props.openWindowCommand} />
+                            <FileComponent item={item} open={props.openWindowCommand} key={item.code} reloadAll={loadFiles} />
                         )
                     } else {
                         return (
-                            <FolderComoponent item={item} open={props.openWindowCommand} />
+                            <FolderComoponent item={item} open={props.openWindowCommand} key={item.code} reloadAll={loadFiles} />
                         )
                     }
                 })}
@@ -55,7 +81,7 @@ function FolderComoponent(props) {
             {open && <div className="content">
                 <hr />
                 {props.item.files.map((file) => (
-                    <FileComponent item={file} open={props.open} />
+                    <FileComponent item={file} open={props.open} key={file.code} reloadAll={props.reloadAll} />
                 ))}
             </div>}
         </div>
@@ -79,13 +105,28 @@ function FileComponent(props) {
         }
     }
 
+    async function deleteFile() {
+        const result = await fetch(`https://fs.cigoria.eu/delete/${props.item.code}`, {
+            method: "GET",
+            headers: {
+                'authorization': localStorage.getItem("simpleShareToken") || ""
+            }
+        })
+        if (result.status == 200) {
+            props.reloadAll()
+        }
+    }
+
     return (
         <div className="fileComponent">
             <div>
                 <img src="file.webp" />
                 <p>{props.item.original_name}</p>
             </div>
-            <button onClick={openFile}>Open</button>
+            <div>
+                <button onClick={openFile}>{(String(props.item.mimetype).includes("image") || String(props.item.mimetype).includes("audio")) ? "Open" : "Download"}</button>
+                <button onClick={deleteFile}><img src="delete.webp" alt="Delete icon" /></button>
+            </div>
         </div>
     )
 }

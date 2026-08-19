@@ -13,6 +13,23 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function Os() {
     const [windows, setWindows] = useState([])
+    const [integration, setIntegration] = useState(false)
+
+
+    async function checkSimpleShare() {
+        if (!localStorage.getItem("simpleShareToken")) {
+            setIntegration(false)
+        } else {
+            const token = localStorage.getItem("simpleShareToken")
+            const result = await fetch("https://fs.cigoria.eu/verifySession", {
+                method: "GET",
+                headers: {
+                    'authorization': token
+                }
+            })
+            setIntegration(result.status == 200)
+        }
+    }
 
     const addWindow = (title, param = null) => {
         setWindows(prev => [...prev, { id: uuidv4(), title, param: param }]);
@@ -31,7 +48,7 @@ export default function Os() {
             case "Calculator":
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 250, y: 320 }}><CalculatorApp /></Window>)
             case "Settings":
-                return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 300 }}><SettingsApp /></Window>)
+                return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 350 }}><SettingsApp integ={integration} setInteg={setIntegration} /></Window>)
             case "Image Viewer":
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 600, y: 450 }}><ImageViewer dimensions={{ x: 600, y: 450 }} link={window.param} /></Window>)
             case "simpleShare":
@@ -61,6 +78,9 @@ export default function Os() {
     }
 
     useEffect(loadWallpaper, [])
+    useEffect(() => {
+        checkSimpleShare()
+    }, [])
 
     return (
         <main>
@@ -86,10 +106,10 @@ export default function Os() {
                     <img src="/music.webp" alt="Music player icon" />
                     <p>Music</p>
                 </button>
-                <button onClick={() => { addWindow("simpleShare") }} className="openButton">
-                    <img src="/music.webp" alt="simpleShare icon" />
+                {integration && <button onClick={() => { addWindow("simpleShare") }} className="openButton">
+                    <img src="/simpleShare.webp" alt="simpleShare icon" />
                     <p>simpleShare</p>
-                </button>
+                </button>}
                 <button onClick={() => { addWindow("Settings") }} className="openButton">
                     <img src="/settings.webp" alt="settings icon" />
                     <p>Settings</p>

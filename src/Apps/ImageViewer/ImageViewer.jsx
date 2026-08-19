@@ -47,7 +47,7 @@ export function ImageViewer(props) {
         const mouseY = e.clientY - rect.top - rect.height / 2;
         const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
         const oldScale = scale;
-        const newScale = Math.min(Math.max(oldScale * zoomFactor, 0.1), 10);
+        const newScale = Math.min(Math.max(oldScale * zoomFactor, 0.01), 10);
         const imageX = (mouseX - position.x) / oldScale;
         const imageY = (mouseY - position.y) / oldScale;
         setPosition({
@@ -55,6 +55,14 @@ export function ImageViewer(props) {
             y: mouseY - imageY * newScale
         });
         setScale(newScale);
+    }
+
+    function loadWallpaper() {
+        let wallpaper = localStorage.getItem("wallpaperUrl")
+        document.querySelector(".desktop").style.backgroundImage = `url(${wallpaper})`
+        document.querySelector(".desktop").style.backgroundSize = "cover";
+        document.querySelector(".desktop").style.backgroundPosition = "center";
+        document.querySelector(".desktop").style.backgroundRepeat = "no-repeat";
     }
 
     return (
@@ -71,7 +79,7 @@ export function ImageViewer(props) {
                 <div className="imageContainer" ref={containerRef} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onWheel={handleWheel}>
                     <img
                         src={link}
-                        alt="Image of image viewer"
+                        alt="Unsupported format!"
                         draggable={false}
                         style={{
                             transform: `
@@ -98,6 +106,12 @@ export function ImageViewer(props) {
                         initialPosition.current = { x: 0, y: 0 }
                         dragStart.current = { x: 0, y: 0 }
                     }}>Reset</button>
+                    {link.includes("https://fs.cigoria.eu") && <button onClick={() => {
+                        localStorage.setItem("wallpaperUrl", link)
+                        loadWallpaper()
+                    }}>
+                        Set as wallpaper
+                    </button>}
                 </div>
             </div>}
         </div>

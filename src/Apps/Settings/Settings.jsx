@@ -3,27 +3,11 @@ import "./Settings.css"
 import { resume } from "react-dom/server"
 
 
-export function SettingsApp() {
+export function SettingsApp(props) {
     const [bgUrl, setBgUrl] = useState(localStorage.getItem("wallpaperUrl"))
-    const [integration, setIntegration] = useState(false)
     function setBg() {
         localStorage.setItem("wallpaperUrl", bgUrl)
         document.querySelector(".desktop").style.backgroundImage = `url(${bgUrl})`
-    }
-
-    async function checkSimpleShare() {
-        if (!localStorage.getItem("simpleShareToken")) {
-            setIntegration(false)
-        } else {
-            const token = localStorage.getItem("simpleShareToken")
-            const result = await fetch("https://fs.cigoria.eu/verifySession", {
-                method: "GET",
-                headers: {
-                    'authorization': token
-                }
-            })
-            setIntegration(result.status == 200)
-        }
     }
 
     async function simpleShareLogin(e) {
@@ -41,7 +25,7 @@ export function SettingsApp() {
         if (result.status == 200) {
             const jsonResult = await result.json()
             localStorage.setItem("simpleShareToken", jsonResult.token)
-            setIntegration(true)
+            props.setInteg(true)
         }
     }
 
@@ -54,11 +38,9 @@ export function SettingsApp() {
         })
         if (result.status == 200) {
             localStorage.removeItem("simpleShareToken")
-            setIntegration(false)
+            props.setInteg(false)
         }
     }
-
-    useEffect(() => { checkSimpleShare() }, [])
 
     return (
         <div className="app settingsApp">
@@ -68,14 +50,14 @@ export function SettingsApp() {
             <hr />
             <div className="simpleShareIntegration">
                 <p>simple<span>Share</span></p>
-                {!integration &&
+                {!props.integ &&
                     <form action="" onSubmit={simpleShareLogin}>
                         <input type="username" placeholder="username" required />
                         <input type="password" placeholder="password" required />
                         <input type="submit" value="Login" />
                     </form>
                 }
-                {integration && <button onClick={simpleShareLogout}>Disable integration</button>}
+                {props.integ && <button onClick={simpleShareLogout}>Disable integration</button>}
             </div>
         </div>
     )

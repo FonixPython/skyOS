@@ -25,6 +25,9 @@
 
 .simpleShareBrowserApp .files .folderComponent .collapseControls {
     display: flex;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-dark);
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -97,4 +100,10 @@
 .simpleShareBrowserApp .files .fileComponent button:active {
     background: var(--highlight-gradient);
     transition: .5s;
+}
+
+.simpleShareBrowserApp form {
+    margin-top: 5px;
+    width: 95%;
+    display: flex;
 }
