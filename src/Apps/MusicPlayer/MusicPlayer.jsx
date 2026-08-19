@@ -3,8 +3,8 @@ import { parseBlob } from "music-metadata"
 import "./MusicPlayer.css"
 
 export function MusicPlayer(props) {
-    const [mode, setMode] = useState("open")
-    const [link, setLink] = useState("")
+    const [mode, setMode] = useState(props.link ? "play" : "open")
+    const [link, setLink] = useState(props.link || "")
     const [cover, setCover] = useState("")
     const [metadata, setMetadata] = useState({ title: "", artist: "", year: "" })
     const [isPlaying, setIsPlaying] = useState(false)
@@ -63,6 +63,12 @@ export function MusicPlayer(props) {
         });
     }
 
+    useEffect(() => {
+        if (props.link) {
+            getData()
+        }
+    }, [])
+
     return (
         <div className="app musicPlayerApp">
             {mode == "open" && <div className="open">
@@ -70,8 +76,10 @@ export function MusicPlayer(props) {
                 <p>or</p>
                 <input type="text" placeholder="simpleShare code" onChange={(e) => { setLink("https://fs.cigoria.eu/files/" + e.target.value); }} />
                 <button onClick={() => {
-                    setMode("play");
-                    getData()
+                    if (link) {
+                        setMode("play");
+                        getData()
+                    }
                 }}>Open</button>
             </div>}
             {mode == "play" && <div className="play" onLoad={onLoad}>

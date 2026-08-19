@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from "react"
 import "./ImageViewer.css"
 
 export function ImageViewer(props) {
-    const [mode, setMode] = useState("open")
-    const [link, setLink] = useState("https://skyfonix.cigoria.eu/api/uploads/aea67551-99bd-11f1-86f2-9c50b9b14b65")
+    const [mode, setMode] = useState(props.link ? "view" : "open")
+    const [link, setLink] = useState(props.link || "https://skyfonix.cigoria.eu/api/uploads/aea67551-99bd-11f1-86f2-9c50b9b14b65")
 
     const containerRef = useRef(null)
 
@@ -62,9 +62,9 @@ export function ImageViewer(props) {
             {mode == "open" && <div className="open" style={{ width: "100%", height: "100%" }}>
                 <input type="text" placeholder="Link here..." value={link} onChange={(e) => { setLink(e.target.value) }} />
                 <p>or</p>
-                <input type="file" onChange={(e) => { setLink(prev => (e.target.files? URL.createObjectURL(e.target.files[0]) : prev)) }} />
+                <input type="file" onChange={(e) => { setLink(prev => (e.target.files ? URL.createObjectURL(e.target.files[0]) : prev)) }} />
                 <p>or</p>
-                <input type="text" placeholder="simpleShare code" onChange={(e) => { setLink("https://fs.cigoria.eu/files/"+e.target.value) }} />
+                <input type="text" placeholder="simpleShare code" onChange={(e) => { setLink("https://fs.cigoria.eu/files/" + e.target.value) }} />
                 <button onClick={() => { setMode("view") }}>Open</button>
             </div>}
             {mode == "view" && <div style={{ width: "100%", height: "100%" }} className="view">

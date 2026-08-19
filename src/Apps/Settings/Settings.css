@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap");
+
 .settingsApp {
     display: flex;
     flex-direction: column;
@@ -36,4 +38,72 @@
     color: var(--text);
     background-color: var(--bg-light);
     height: 1.5rem;
+}
+
+.settingsApp .simpleShareIntegration {
+    background-color: var(--bg-light);
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 5px;
+    border: 3px ridge var(--highlight);
+}
+
+.settingsApp .simpleShareIntegration form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 5px;
+}
+
+.settingsApp .simpleShareIntegration form * {
+    outline: none;
+    padding: 5px;
+    transition: 0.1s;
+}
+
+.settingsApp .simpleShareIntegration form input[type="submit"] {
+    height: 2rem;
+}
+
+.settingsApp .simpleShareIntegration form input[type="submit"]:hover {
+    scale: 1.05;
+    border-image: var(--highlight-gradient) 1;
+    transition: 0.1s;
+}
+
+.settingsApp .simpleShareIntegration p {
+    font-family: "Inter";
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.settingsApp .simpleShareIntegration span {
+    font-family: "Inter";
+    font-weight: 400;
+    background: linear-gradient(to right, #6792ff, #5ef78c);
+    background-clip: text;
+    color: transparent;
+}
+
+.settingsApp .simpleShareIntegration button {
+    margin: 5px;
+    color: var(--danger);
+    border-color: var(--danger);
+    background-color: color-mix(in srgb, var(--bg-light) 100%, var(--danger) 10%);
+}
+
+.settingsApp .simpleShareIntegration button:hover {
+    border-color: var(--danger);
+}
+
+.settingsApp hr {
+    width: 100%;
+    border: 1px solid;
+    border-image: var(--highlight-gradient) 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
