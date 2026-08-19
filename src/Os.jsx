@@ -54,7 +54,7 @@ export default function Os() {
             case "simpleShare":
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 600, y: 450 }}><SimpleShareBrowser openWindowCommand={addWindow} /></Window>)
             case "Music Player":
-                return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 450 }}><MusicPlayer link={window.param} /></Window>)
+                return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 500 }}><MusicPlayer link={window.param} /></Window>)
             default:
                 return (<Window title={window.title} onClose={(i) => { handleRemoveWindow(i) }} key={window.id} index={window.id} dimensions={{ x: 350, y: 500 }}></Window>)
         }
