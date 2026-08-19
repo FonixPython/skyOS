@@ -40,6 +40,10 @@ export function SimpleShareBrowser(props) {
                 loadFiles()
                 setSelectedFile(null)
                 e.target.reset()
+            } else {
+                if (result.status == 413) {
+                    alert("Not enough quota!")
+                }
             }
         }
     }
