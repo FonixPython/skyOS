@@ -107,3 +107,30 @@
     width: 95%;
     display: flex;
 }
+
+.simpleShareBrowserApp .quotaDisplay {
+    width: 95%;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.simpleShareBrowserApp .quotaBar {
+    height: 10px;
+    width: 100%;
+    border: 2px solid var(--highlight);
+    margin: 5px;
+    background-color: var(--bg-light);
+    display: flex;
+    overflow: hidden;
+}
+
+.simpleShareBrowserApp .quotaBar .filled {
+    height: 100%;
+    background-color: #5ef78c;
+}
+
+.simpleShareBrowserApp .quotaDisplay p {
+    width: fit-content;
+    white-space: nowrap;
+}

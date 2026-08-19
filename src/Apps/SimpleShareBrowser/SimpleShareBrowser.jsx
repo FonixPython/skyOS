@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./SimpleShareBrowser.css"
 
 export function SimpleShareBrowser(props) {
     const [files, setFiles] = useState([])
+    const [quota, setQuota] = useState({ total: 0, used: 0 })
+
+    const quotaBarRef = useRef(null)
 
     async function loadFiles() {
         const result = await fetch("https://fs.cigoria.eu/getAllFiles", {
@@ -13,8 +16,17 @@ export function SimpleShareBrowser(props) {
         })
         if (result.status == 200) {
             const resultJson = await result.json()
-            console.log(resultJson)
             setFiles(resultJson)
+        }
+        const quotaResult = await fetch("https://fs.cigoria.eu/quota", {
+            method: "GET",
+            headers: {
+                'authorization': localStorage.getItem("simpleShareToken") || ""
+            }
+        })
+        if (quotaResult.status == 200) {
+            const resultJson = await quotaResult.json()
+            setQuota(resultJson)
         }
     }
 
@@ -48,8 +60,30 @@ export function SimpleShareBrowser(props) {
         }
     }
 
+    function formatBytes(bytes) {
+        if (bytes === 0) return "0 B";
+        const units = ["B", "kB", "MB", "GB", "TB"];
+        const threshold = 1024;
+        let unitIndex = 0;
+        let size = bytes;
+
+        while (size >= threshold && unitIndex < units.length - 1) {
+            size /= threshold;
+            unitIndex++;
+        }
+
+        return `${size.toFixed(1)} ${units[unitIndex]}`;
+    }
+
     return (
         <div className="app simpleShareBrowserApp">
+            <div className="quotaDisplay">
+                <p>{Math.floor(quota.used / quota.total * 100)}%</p>
+                <div className="quotaBar" ref={quotaBarRef}>
+                    <div className="filled" style={{ width: `${Math.floor(100 * quota.used / quota.total)}%` }}></div>
+                </div>
+                <p>{formatBytes(quota.used)}/{formatBytes(quota.total)}</p>
+            </div>
             <form onSubmit={uploadFile}>
                 <input type="file" onChange={(e) => { setSelectedFile(e.target.files?.[0] || null) }} />
                 <input type="submit" value="Upload" />
