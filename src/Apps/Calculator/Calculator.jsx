@@ -56,9 +56,14 @@ export function CalculatorApp() {
         }
     }
 
+    const indirectEval = eval
     function handleCalculate() {
-        const result = String(eval(equationArray.join("")))
-        setEquationArray([result])
+        try {
+            const result = String(indirectEval(equationArray.join("")))
+            setEquationArray([result])
+        } catch {
+            setEquationArray(["Error"])
+        }
     }
 
 
